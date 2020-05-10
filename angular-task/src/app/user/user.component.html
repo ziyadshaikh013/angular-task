@@ -1,0 +1,49 @@
+<div class="user">
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-12">
+        <h2>Welcome, {{users.user.email}}</h2>
+      </div>
+      <div class="col-12">
+        <h4>Your Requests</h4>
+      </div>
+    </div>
+    <hr class="hr" />
+    <div class="noreq" *ngIf="!isRequest; else request">
+      No Requests
+    </div>
+    <ng-template #request>
+      <div class="row">
+        <div class="col-sm-6 col-md-5 mb-3">
+          <p class="name">Sender</p>
+          {{users.user.request.sender}}
+        </div>
+        <div id="subject" class="col-sm-6 col-md-5 mb-3">
+          <p class="name">Subject</p>
+          {{users.user.request.subject}}
+        </div>
+        <div class="col-sm-6 col-md-2">
+          <p class="name">Action</p>
+          <button class="btn btn-danger" *ngIf="!isAccepted" (click)="onAccept()">Accept</button>
+          <button class="btn btn-success" *ngIf="isAccepted">Accepted</button>
+        </div>
+      </div>
+    </ng-template>
+
+    <div *ngIf="isAccepted">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 m-auto">
+            <h5 class="text-center display-4 my-4">Uploads Paper</h5>
+            <form (ngSubmit)="onSubmit(f)" #f="ngForm" method="POST" enctype="multipart/form-data">
+              <div class="custom-file mb-3">
+                <label for="file" class="custom-file-label">Choose File</label>
+                <input type="file" name="file" id="file" class="custom-file-input">
+              </div>
+              <input type="submit" value="Submit" class="btn btn-primary btn-block">
+            </form>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
